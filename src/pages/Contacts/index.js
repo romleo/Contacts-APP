@@ -14,7 +14,7 @@ const useContacts = () => {
                 if (error) {
                     throw new Error(error);
                 }
-                setContacts(results);
+                setData(results);
                 setIsError(false);
             } catch (e) {
                 setIsError(true);
@@ -25,31 +25,28 @@ const useContacts = () => {
         };
         getContacts()
     }, []);
+    return {
+        data,
+        isLoading,
+        isError,
+    }
 }
 
 
 export const Contacts = () => {
-    const [contacts, setContacts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
+    const contacts = useContacts();
 
-    useEffect(() => {
-        const getContacts = async () => {
-            setIsLoading(true);
-            try {
-                const response = await fetch("https://randomuser.me/api/?results=200");
-                const { results, error } = await response.json();
-                if (error) {
-                    throw new Error(error);
-                }
-                setContacts(results);
-                setIsError(false);
-            } catch (e) {
-                setIsError(true);
-            }
-            finally {
-                setIsLoading(false);
-            }
+    if (contacts.isLoading) {
+        return <div>...LOADING</div>;
+    }
+    if (contacts.isError) {
+        return <div>...ERROR</div>;
+    }
+    return <div>Contacts {contacts.data[0].name.first}</div>;
+};
+
+
+//Pre refactoring code//
 
             // fetch("https://randomuser.me/api/?results=200")
             //     .then(response => response.json())
@@ -62,15 +59,4 @@ export const Contacts = () => {
             //         setIsLoading(false)
             //         setIsError(true);
             //     });//refactoring code 
-        };
-        getContacts()
-    }, []);
-
-    if (isLoading) {
-        return <div>...LOADING</div>;
-    }
-    if (isError) {
-        return <div>...ERROR</div>;
-    }
-    return <div>Contacts {contacts[0].name.first}</div>;
-}
+    
