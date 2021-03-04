@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'recat';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 const useContacts = () => {
     const [contacts, setContacts] = useState([]);
@@ -42,7 +44,14 @@ export const Contacts = () => {
     if (contacts.isError) {
         return <div>...ERROR</div>;
     }
-    return <div>Contacts {contacts.data[0].name.first}</div>;
+    return (
+      <div>
+        <Grid container>
+            <Grid item xs={12}>
+                <div>Contacts {contacts.data[0].name.first}</div>
+            </Grid>
+        </Grid></div>
+    );
 };
 
 
@@ -59,4 +68,3 @@ export const Contacts = () => {
             //         setIsLoading(false)
             //         setIsError(true);
             //     });//refactoring code 
-    
