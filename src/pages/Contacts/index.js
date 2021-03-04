@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'recat';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
 
 const useContacts = () => {
     const [contacts, setContacts] = useState([]);
@@ -45,12 +46,13 @@ export const Contacts = () => {
         return <div>...ERROR</div>;
     }
     return (
-      <div>
+      <Container>
         <Grid container>
             <Grid item xs={12}>
-                <div>Contacts {contacts.data[0].name.first}</div>
+                <Paper>Contacts {contacts.data[0].name.first}</Paper>
             </Grid>
-        </Grid></div>
+        </Grid>
+        </Container>
     );
 };
 
