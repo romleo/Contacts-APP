@@ -1,7 +1,20 @@
 import { useState, useEffect } from 'recat';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+//import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
+import { makeStyles, createStyles} from '@material-ui/core/styles';
+
+
+const useStyle = makeStyles((theme) =>createStyles ({
+    root:{
+        backgroundColor: theme.color.red,
+    },
+}));
+makeStyles ({
+    root:{
+        marginTop: "24px",
+    },
+});
 
 const useContacts = () => {
     const [contacts, setContacts] = useState([]);
@@ -37,19 +50,20 @@ const useContacts = () => {
 
 
 export const Contacts = () => {
+    const classes = useStyles();
     const contacts = useContacts();
 
     if (contacts.isLoading) {
         return <div>...LOADING</div>;
     }
     if (contacts.isError) {
-        return <div>...ERROR</div>;
+        return <div>...ERROR</div>
     }
     return (
-      <Container>
+      <Container className={classes.root}>
         <Grid container>
             <Grid item xs={12}>
-                <Paper>Contacts {contacts.data[0].name.first}</Paper>
+                <div>Contacts {contacts.data[0].name.first}</div>
             </Grid>
         </Grid>
         </Container>
